@@ -1,0 +1,41 @@
+metadata:
+    language: v1-beta
+    name: "SSTI - appending"
+    description: "Server-side template injection (SSTI)"
+    author: "MrW0l05zyn"
+	tags: "ssti"
+
+run for each:
+	payloads =
+		"{1234*2}",
+		"{1234+1234}",
+		"%{1234*2}",
+		"%{1234+1234}",
+		"<%= 1234*2 %>",
+		"<%= 1234+1234 %>",
+		"${1234*2}",
+		"${1234+1234}",
+		"{{1234*2}}",
+		"{{1234+1234}}",
+		"#{1234*2}",
+		"#{1234+1234}",
+		"@{1234*2}",
+		"@{1234+1234}",
+		"@(1234*2)",
+		"@(1234+1234)"
+
+given insertion point then
+
+    if not({base.response} matches "2468|2\,468|2\.468|\<2468\>") then
+        send payload:
+            appending: {payloads}
+
+        if {latest.response} matches "2468|2\,468|2\.468|\<2468\>" then
+            report issue:
+                severity: high
+                confidence: tentative
+                detail: "The application transforms input in a way that suggests it might be
+                         vulnerable to some kind of server-side code injection."
+                remediation: "Manual investigation is advised."
+        end if
+    end if
