@@ -1,28 +1,28 @@
 metadata:
-		language: v1-beta
-		name: "SSTI"
-		description: "Server-side template injection (SSTI)"
-		author: "MrW0l05zyn"
-		tags: "ssti"
+	language: v1-beta
+	name: "SSTI"
+	description: "Server-side template injection (SSTI)"
+	author: "MrW0l05zyn"
+	tags: "ssti"
 
 run for each:
-		payloads =
-				"{1234*2}",
-				"{1234+1234}",
-				"%{1234*2}",
-				"%{1234+1234}",
-				"<%= 1234*2 %>",
-				"<%= 1234+1234 %>",
-				"${1234*2}",
-				"${1234+1234}",
-				"{{1234*2}}",
-				"{{1234+1234}}",
-				"#{1234*2}",
-				"#{1234+1234}",
-				"@{1234*2}",
-				"@{1234+1234}",
-				"@(1234*2)",
-				"@(1234+1234)"
+	payloads =
+		"{1234*2}",
+		"{1234+1234}",
+		"%{1234*2}",
+		"%{1234+1234}",
+		"<%= 1234*2 %>",
+		"<%= 1234+1234 %>",
+		"${1234*2}",
+		"${1234+1234}",
+		"{{1234*2}}",
+		"{{1234+1234}}",
+		"#{1234*2}",
+		"#{1234+1234}",
+		"@{1234*2}",
+		"@{1234+1234}",
+		"@(1234*2)",
+		"@(1234+1234)"
 
 given any insertion point then
 
@@ -33,9 +33,9 @@ given any insertion point then
             replacing: {payloads}
 
         if {latest.response} matches "2468|2\,468|2\.468|\<2468\>" then
-						report issue:
-						    severity: high
-						    confidence: tentative
-						    detail: "Server-side template injection (SSTI)"
+			report issue:
+			    severity: high
+			    confidence: tentative
+			    detail: "Server-side template injection (SSTI)"
         end if
     end if
