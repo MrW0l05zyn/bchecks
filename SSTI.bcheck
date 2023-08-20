@@ -32,7 +32,7 @@ given any insertion point then
         send payload:
             replacing: {payloads}
 
-        if {latest.response} matches "2468|2\,468|2\.468|\<2468\>" then
+		if {latest.response} matches "2468|2\,468|2\.468|\<2468\>" then
 			report issue:
 			    severity: high
 			    confidence: tentative
